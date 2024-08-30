@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassportChecker", "PassportChecker\PassportChecker.csproj", "{A22876E4-5C74-499E-AD5C-F16FA40B93BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PassportChecker.Tests", "PassportChecker.Tests\PassportChecker.Tests.csproj", "{5CC95D35-71A3-4BBC-BCE5-8F0BC0654E9A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A22876E4-5C74-499E-AD5C-F16FA40B93BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A22876E4-5C74-499E-AD5C-F16FA40B93BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A22876E4-5C74-499E-AD5C-F16FA40B93BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A22876E4-5C74-499E-AD5C-F16FA40B93BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CC95D35-71A3-4BBC-BCE5-8F0BC0654E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC95D35-71A3-4BBC-BCE5-8F0BC0654E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC95D35-71A3-4BBC-BCE5-8F0BC0654E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC95D35-71A3-4BBC-BCE5-8F0BC0654E9A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90E24E19-0C32-47AD-92A1-5C1A22E920EE}
+	EndGlobalSection
+EndGlobal

@@ -1,13 +1,12 @@
 ﻿using PassportChecker.Models;
 
-namespace PassportChecker.Services.Interfaces
+namespace PassportChecker.Services.Interfaces;
+
+public interface IPassportService
 {
-    public interface IPassportService
-    {
-        List<Passport> GetInactivePassports();
+    Task<List<Passport>> GetInactivePassports();
 
-        List<Change> GetChangesByDate(DateTime date);
+    Task<List<Change>> GetChangesByDate(DateTime date);
 
-        List<Change> GetChangeByPassport(int series, int number);
-    }
+    Task<List<Change>> GetChangeByPassport(int series, int number);
 }

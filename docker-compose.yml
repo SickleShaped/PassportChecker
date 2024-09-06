@@ -1,0 +1,36 @@
+version: '3.9'
+
+networks:
+  passport-checker-network:
+   driver: bridge
+
+
+services:
+  passportchecker:
+    image: ${DOCKER_REGISTRY-}passportchecker
+    build:
+      context: .
+      dockerfile: PassportChecker/Dockerfile
+    networks:
+     - passport-checker-network
+    depends_on: 
+     - postgreSQLdb
+
+        
+  postgreSQLdb:
+     container_name: postgreSQLdb
+     image: postgres:latest
+     environment:
+      POSTGRES_DB: passportsDB  
+      POSTGRES_PASSWORD: 9p8o7i6u
+      POSTGRES_USER: postgres
+     ports:
+      - "5432:5432"
+     networks:
+      - passport-checker-network
+     volumes:
+     - postgres-data:/var/lib/postgresql/data
+
+
+volumes:
+ postgres-data: 

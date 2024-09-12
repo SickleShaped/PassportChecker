@@ -8,7 +8,8 @@ public class PassportModel
 
     public override bool Equals(object? obj)
     {
-        Passport passport1 = obj as Passport;
+
+        PassportModel passport1 = obj as PassportModel;
         if (passport1 == null) return false;
 
         return Number == passport1.Number && Series == passport1.Series;

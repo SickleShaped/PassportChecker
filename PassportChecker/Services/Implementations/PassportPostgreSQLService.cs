@@ -27,14 +27,14 @@ public class PassportPostgreSQLService : IPassportService
 
     public async Task<List<Change>> GetChangesByDate(DateTime date)
     {
-        var changes = await _dbContext.PassportChanges.Where(c => (date.Year - 2000) * 10000 + date.Month * 100 + date.Day == c.Date).AsNoTracking().ProjectTo<Change>(_mapper.ConfigurationProvider).ToListAsync();
+        var changes = await _dbContext.Changes.Where(c => (date.Year - 2000) * 10000 + date.Month * 100 + date.Day == c.Date).AsNoTracking().ProjectTo<Change>(_mapper.ConfigurationProvider).ToListAsync();
         return changes;
 
     }
 
     public async Task<List<Change>> GetChangeByPassport(int series, int number)
     {
-        var changes = await _dbContext.PassportChanges.Where(c => c.Series == series && c.Number == number).AsNoTracking().ProjectTo<Change>(_mapper.ConfigurationProvider).ToListAsync();
+        var changes = await _dbContext.Changes.Where(c => c.Series == series && c.Number == number).AsNoTracking().ProjectTo<Change>(_mapper.ConfigurationProvider).ToListAsync();
         return changes;
 
     }

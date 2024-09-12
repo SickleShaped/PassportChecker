@@ -30,36 +30,36 @@ public class ReaderService : IReaderService
         var needToDelete = dbPassports.Except(sourcePassports); //только те, которые есть в базе, но уже нет в сурс-файле
         var needToAdd = sourcePassports.Except(dbPassports); //только те, которое есть в сурс файле, но пока нет в базе
 
+        int date = (DateTime.Now.Year - 2000) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day;
+
+        List<ChangeModel> changes = new List<ChangeModel>();
+
         foreach (var Delete in needToDelete)
         {
-            _dbContext.Passports.Remove(Delete);
-            await _dbContext.PassportChanges.AddAsync(new ChangeModel()
+            changes.Add(new ChangeModel()
             {
                 Series = Delete.Series,
                 Number = Delete.Number,
                 Id = new Guid(),
                 IsActive = true,
-                Date = (DateTime.Now.Year - 2000) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day
+                Date = date
             });
         }
-
         foreach (var Add in needToAdd)
         {
-            await _dbContext.Passports.AddAsync(new PassportModel()
-            {
-                Series = Add.Series,
-                Number = Add.Number
-            });
-            await _dbContext.PassportChanges.AddAsync(new ChangeModel()
+            changes.Add(new ChangeModel()
             {
                 Series = Add.Series,
                 Number = Add.Number,
                 Id = new Guid(),
                 IsActive = false,
-                Date = (DateTime.Now.Year - 2000) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day
+                Date = date
             });
         }
 
+        _dbContext.Passports.RemoveRange(needToDelete);
+        _dbContext.Passports.AddRangeAsync(needToAdd);
+        _dbContext.Changes.AddRangeAsync(changes);
         await _dbContext.SaveChangesAsync();
     }
 
@@ -72,8 +72,10 @@ public class ReaderService : IReaderService
             tfp.TextFieldType = FieldType.Delimited;
             tfp.SetDelimiters(",");
             tfp.ReadFields();
-            while (!tfp.EndOfData)
+            int x = 0;
+            while (!tfp.EndOfData && x<=15000) //убери тут X и всё.
             {
+                x++;
                 PassportModel passport = new PassportModel();
                 string[] fields = tfp.ReadFields();
 

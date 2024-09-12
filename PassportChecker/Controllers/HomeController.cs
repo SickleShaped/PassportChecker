@@ -15,11 +15,11 @@ public class HomeController : Controller
 {
     private readonly IPassportService _passportService;
 
-    public ReaderService readerService; ///..............................................................
+    public IReaderService _readerService; ///..............................................................
 
-    public HomeController(IPassportService passportService)
+    public HomeController(IPassportService passportService, IReaderService readerService)
     {
-        readerService = new ReaderService();
+        _readerService = readerService;
         _passportService = passportService;
     }
 
@@ -30,9 +30,9 @@ public class HomeController : Controller
     }
 
     [HttpGet("GetInactivePassports")]
-    public async Task<List<Passport>> GetInactivePassports()
+    public async Task<Passport> GetInactivePassports(int series, int number)
     {
-        return await _passportService.GetInactivePassports();
+        return await _passportService.GetInactivePassports(series, number);
     }
 
     [HttpGet("GetChangesByDate")]
@@ -48,8 +48,8 @@ public class HomeController : Controller
     }
 
     [HttpPost("FAKEREADER")]
-    public async void GetDataFromSource()
+    public async Task GetDataFromSource()
     {
-         readerService.GetDataFromSource();
+        await _readerService.GetDataFromSource();
     }
 }

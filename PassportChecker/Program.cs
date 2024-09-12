@@ -26,7 +26,7 @@ public class Program
         builder.Services.AddDependencyInjection(builder.Configuration);
         builder.Services.AddControllersWithViews();
        
-        builder.Services.AddHostedService<ReaderHostedService>();
+        //builder.Services.AddHostedService<ReaderHostedService>();
 
         var app = builder.Build();
 

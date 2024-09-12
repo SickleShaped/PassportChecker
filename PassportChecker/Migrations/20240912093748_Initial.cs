@@ -18,7 +18,7 @@ namespace PassportChecker.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Series = table.Column<int>(type: "integer", nullable: false),
                     Number = table.Column<int>(type: "integer", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Date = table.Column<int>(type: "integer", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -30,14 +30,12 @@ namespace PassportChecker.Migrations
                 name: "Passports",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Series = table.Column<int>(type: "integer", nullable: false),
-                    Number = table.Column<int>(type: "integer", nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
+                    Number = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Passports", x => x.Id);
+                    table.PrimaryKey("PK_Passports", x => new { x.Series, x.Number });
                 });
 
             migrationBuilder.CreateIndex(

@@ -28,8 +28,8 @@ namespace PassportChecker.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int>("Date")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -49,20 +49,13 @@ namespace PassportChecker.Migrations
 
             modelBuilder.Entity("PassportChecker.Models.DbModels.PassportModel", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Series")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Series")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
+                    b.HasKey("Series", "Number");
 
                     b.HasIndex("Series", "Number");
 

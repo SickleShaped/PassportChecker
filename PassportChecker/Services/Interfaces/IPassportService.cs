@@ -4,7 +4,7 @@ namespace PassportChecker.Services.Interfaces;
 
 public interface IPassportService
 {
-    Task<List<Passport>> GetInactivePassports();
+    Task<Passport> GetInactivePassports(int series, int number);
 
     Task<List<Change>> GetChangesByDate(DateTime date);
 

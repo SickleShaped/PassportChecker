@@ -21,7 +21,7 @@ services:
      container_name: postgreSQLdb
      image: postgres:latest
      environment:
-      POSTGRES_DB: passportsDB  
+      POSTGRES_DB: DBpassportsTest  
       POSTGRES_PASSWORD: 9p8o7i6u
       POSTGRES_USER: postgres
      ports:

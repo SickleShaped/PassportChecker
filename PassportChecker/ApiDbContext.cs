@@ -14,7 +14,7 @@ public class ApiDbContext:DbContext
 
     public DbSet<PassportModel> Passports { get; set; } = null!;
 
-    public DbSet<ChangeModel> Changes { get; set; } = null!;
+    public DbSet<ChangeModel> PassportChanges { get; set; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder builder)

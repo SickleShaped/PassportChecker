@@ -49,7 +49,7 @@ public class ReaderService : IReaderService
             {
                 Series = Add.Series,
                 Number = Add.Number
-            });
+            }); 
             await _dbContext.PassportChanges.AddAsync(new ChangeModel()
             {
                 Series = Add.Series,

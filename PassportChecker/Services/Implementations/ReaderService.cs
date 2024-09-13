@@ -8,7 +8,9 @@ using PassportChecker.Services.Interfaces;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.ComponentModel;
 
+
 namespace PassportChecker.Services.Implementations;
+
 
 public class ReaderService : IReaderService
 {
@@ -19,7 +21,6 @@ public class ReaderService : IReaderService
     {
         _dbContext = dbContext;
         _mapper = mapper;
-
     }
 
     public async Task GetDataFromSource()
@@ -58,8 +59,8 @@ public class ReaderService : IReaderService
         }
 
         _dbContext.Passports.RemoveRange(needToDelete);
-        _dbContext.Passports.AddRangeAsync(needToAdd);
-        _dbContext.Changes.AddRangeAsync(changes);
+        await _dbContext.Passports.AddRangeAsync(needToAdd);
+        await _dbContext.Changes.AddRangeAsync(changes);
         await _dbContext.SaveChangesAsync();
     }
 
@@ -72,16 +73,14 @@ public class ReaderService : IReaderService
             tfp.TextFieldType = FieldType.Delimited;
             tfp.SetDelimiters(",");
             tfp.ReadFields();
-            int x = 0;
-            while (!tfp.EndOfData && x<=15000) //убери тут X и всё.
+            while (!tfp.EndOfData)
             {
-                x++;
                 PassportModel passport = new PassportModel();
                 string[] fields = tfp.ReadFields();
 
                 bool seriesSuccess = Int32.TryParse(fields[0], out int series);
                 bool numberSuccess = Int32.TryParse(fields[1], out int number);
-                bool formatSuccess = seriesSuccess && numberSuccess && series>=1000 && fields[0].Length == 4 && fields[1].Length == 6;
+                bool formatSuccess = seriesSuccess && numberSuccess && series >= 1000 && fields[0].Length == 4 && fields[1].Length == 6;
 
                 if (formatSuccess)
                 {
@@ -89,6 +88,9 @@ public class ReaderService : IReaderService
                     passport.Number = number;
                     passports.Add(passport);
                 }
+
+
+
             }
         }
         return passports;

@@ -25,11 +25,15 @@ public class PassportPostgreSQLService : IPassportService
         return passports;
     }
 
-    public async Task<List<Change>> GetChangesByDate(DateTime date)
+    public async Task<List<Change>> GetChangesByDate(int date)
     {
-        var changes = await _dbContext.Changes.Where(c => (date.Year - 2000) * 10000 + date.Month * 100 + date.Day == c.Date).AsNoTracking().ProjectTo<Change>(_mapper.ConfigurationProvider).ToListAsync();
+        var changes = await _dbContext.Changes.Where(c => date == c.Date).AsNoTracking().ProjectTo<Change>(_mapper.ConfigurationProvider).ToListAsync();
+        
+        foreach (var change in changes)
+        {
+            Console.WriteLine($"{change.Series} {change.Number} {change.Date} {change.IsActive} ");
+        }
         return changes;
-
     }
 
     public async Task<List<Change>> GetChangeByPassport(int series, int number)

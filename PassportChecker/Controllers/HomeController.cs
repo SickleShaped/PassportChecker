@@ -36,7 +36,7 @@ public class HomeController : Controller
     }
 
     [HttpGet("GetChangesByDate")]
-    public async Task<List<Change>> GetChangesByDate(DateTime date)
+    public async Task<List<Change>> GetChangesByDate(int date)
     {
         return await _passportService.GetChangesByDate(date);
     }

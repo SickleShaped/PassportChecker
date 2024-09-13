@@ -14,22 +14,38 @@ services:
     networks:
      - passport-checker-network
     depends_on: 
-     - postgreSQLdb
+     #- postgreSQLdb
+     - clickhouse
+  
+  clickhouse:
+    container_name: clickhouse
+    image: clickhouse/clickhouse-server:latest
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+      - "9009:9009"
+     
+    ulimits:
+      nproc: 65535
+      nofile:
+       soft: 262144
+       hard: 262144
 
-        
-  postgreSQLdb:
-     container_name: postgreSQLdb
-     image: postgres:latest
-     environment:
-      POSTGRES_DB: DBpassportsTest  
-      POSTGRES_PASSWORD: 9p8o7i6u
-      POSTGRES_USER: postgres
-     ports:
-      - "5432:5432"
-     networks:
-      - passport-checker-network
-     volumes:
-     - postgres-data:/var/lib/postgresql/data
+
+
+  #postgreSQLdb:
+   #  container_name: postgreSQLdb
+   #  image: postgres:latest
+   #  environment:
+   #   POSTGRES_DB: DBpassportsTest  
+   #   POSTGRES_PASSWORD: 9p8o7i6u
+   #   POSTGRES_USER: postgres
+   #  ports:
+   #   - "5432:5432"
+   #  networks:
+   #   - passport-checker-network
+   #  volumes:
+   #  - postgres-data:/var/lib/postgresql/data
 
 
 volumes:

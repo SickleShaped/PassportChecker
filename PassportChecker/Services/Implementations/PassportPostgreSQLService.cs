@@ -7,7 +7,6 @@ using PassportChecker.Models;
 using PassportChecker.Services.Interfaces;
 
 namespace PassportChecker.Services.Implementations;
-
 public class PassportPostgreSQLService : IPassportService
 {
     private readonly ApiDbContext _dbContext;
@@ -35,6 +34,5 @@ public class PassportPostgreSQLService : IPassportService
     {
         var changes = await _dbContext.Changes.Where(c => c.Series == series && c.Number == number).AsNoTracking().ProjectTo<Change>(_mapper.ConfigurationProvider).ToListAsync();
         return changes;
-
     }
 }

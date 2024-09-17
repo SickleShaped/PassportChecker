@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using PassportChecker.Services.Interfaces;
 
 namespace PassportChecker.Services.Implementations;
-
 public class ReaderHostedService : BackgroundService
 {
     private readonly ReaderService _readerService;
@@ -15,8 +14,6 @@ public class ReaderHostedService : BackgroundService
         Hour = Int32.Parse(configuration["ReaderTime:Hour"]);
         Minute = Int32.Parse(configuration["ReaderTime:Minute"]);
         _readerService = new ReaderService(dbContext, mapper);
-
-        //var readerHour = builder.Configuration["ReaderTime:Hour"];
     }
 
     public override Task StartAsync(CancellationToken cancellationToken)
@@ -33,9 +30,6 @@ public class ReaderHostedService : BackgroundService
                 _readerService.GetDataFromSource();
             }
         }
-
-
-        //await Task.CompletedTask;
     }
 
     public override async Task StopAsync(CancellationToken cancellationToken)

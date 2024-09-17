@@ -39,9 +39,14 @@ namespace PassportChecker.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Changes_Id",
+                name: "IX_Changes_Date",
                 table: "Changes",
-                column: "Id");
+                column: "Date");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Changes_Series_Number",
+                table: "Changes",
+                columns: new[] { "Series", "Number" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Passports_Series_Number",

@@ -12,7 +12,7 @@ using PassportChecker;
 namespace PassportChecker.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20240912093748_Initial")]
+    [Migration("20240917075528_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -45,7 +45,9 @@ namespace PassportChecker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("Date");
+
+                    b.HasIndex("Series", "Number");
 
                     b.ToTable("Changes", (string)null);
                 });

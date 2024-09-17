@@ -28,11 +28,6 @@ public class PassportPostgreSQLService : IPassportService
     public async Task<List<Change>> GetChangesByDate(int date)
     {
         var changes = await _dbContext.Changes.Where(c => date == c.Date).AsNoTracking().ProjectTo<Change>(_mapper.ConfigurationProvider).ToListAsync();
-        
-        foreach (var change in changes)
-        {
-            Console.WriteLine($"{change.Series} {change.Number} {change.Date} {change.IsActive} ");
-        }
         return changes;
     }
 

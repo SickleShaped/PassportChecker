@@ -14,7 +14,17 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        var connection = builder.Configuration.GetConnectionString("Default");
+
+        string? connection;
+        if(builder.Environment.IsDevelopment())
+        {
+            connection = builder.Configuration.GetConnectionString("Test");
+        }
+        else
+        {
+            connection = builder.Configuration.GetConnectionString("Default");
+        }
+        
         
         builder.Services.AddSwaggerGen(config =>
         {

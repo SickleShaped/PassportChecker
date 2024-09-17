@@ -26,12 +26,12 @@ public class ReaderService : IReaderService
     public async Task GetDataFromSource()
     {
         var sourcePassports = GetPassports();
-        var dbPassports = await _dbContext.Passports.ToListAsync();
+        var dbPassports = await _dbContext.Passports.AsNoTracking().ToListAsync();
 
-        var needToDelete = dbPassports.Except(sourcePassports); //только те, которые есть в базе, но уже нет в сурс-файле
-        var needToAdd = sourcePassports.Except(dbPassports); //только те, которое есть в сурс файле, но пока нет в базе
+        var needToDelete = dbPassports.Except(sourcePassports).ToList(); //только те, которые есть в базе, но уже нет в сурс-файле
+        var needToAdd = sourcePassports.Except(dbPassports).ToList(); //только те, которое есть в сурс файле, но пока нет в базе
 
-        int date = (DateTime.Now.Year - 2000) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day;
+        int date = (DateTime.Now.Year - 2000-1) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day;
 
         List<ChangeModel> changes = new List<ChangeModel>();
 
@@ -57,15 +57,45 @@ public class ReaderService : IReaderService
                 Date = date
             });
         }
+        
+        while (needToDelete.Count > 0)
+        {
+            int number = 0;
+            if (needToDelete.Count >= 25000) number = 25000;
+            else number = needToDelete.Count;
 
-        _dbContext.Passports.RemoveRange(needToDelete);
-        await _dbContext.Passports.AddRangeAsync(needToAdd);
-        await _dbContext.Changes.AddRangeAsync(changes);
-        await _dbContext.SaveChangesAsync();
+            var x = needToDelete.GetRange(0, number);
+            _dbContext.RemoveRange(x);
+            _dbContext.SaveChangesAsync();
+            needToDelete.RemoveRange(0, number);
+        }
+        while (changes.Count > 0)
+        {
+            int number = 0;
+            if (changes.Count >= 25000) number = 25000;
+            else number = changes.Count;
+
+            var x = changes.GetRange(0, number);
+            await _dbContext.Changes.AddRangeAsync(x);
+            await _dbContext.SaveChangesAsync();
+            changes.RemoveRange(0, number);  
+        }
+        while (needToAdd.Count > 0)
+        {
+            int number = 0;
+            if (needToAdd.Count >= 25000) number = 25000;
+            else number = needToAdd.Count;
+
+            var x = needToAdd.GetRange(0, number);
+            await _dbContext.Passports.AddRangeAsync(x);
+            await _dbContext.SaveChangesAsync();
+            needToAdd.RemoveRange(0, number);
+        }
     }
 
     private List<PassportModel> GetPassports()
-    {
+    { 
+
         List<PassportModel> passports = new List<PassportModel>();
         using (TextFieldParser tfp = new TextFieldParser(@"C:\\PassportChecker\Data.csv"))
         {

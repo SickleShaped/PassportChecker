@@ -42,7 +42,9 @@ namespace PassportChecker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("Date");
+
+                    b.HasIndex("Series", "Number");
 
                     b.ToTable("Changes", (string)null);
                 });

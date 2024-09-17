@@ -29,33 +29,33 @@ public class ReaderService : IReaderService
         var needToDelete = new List<PassportModel>(); //только те, которые есть в базе, но уже нет в сурс-файле
         foreach (var dbPassport in dbPassports)
         {
-            bool needsRemove = false;
-            foreach(var sourcepassport in sourcePassports)
+            bool needsRemove = true;
+            foreach (var sourcepassport in sourcePassports)
             {
-                if(dbPassport.Equals(sourcepassport))
+                if (dbPassport.Equals(sourcepassport))
                 {
-                    needsRemove = true;
+                    needsRemove = false;
                     break;
                 }
             }
-            if(needsRemove) needToDelete.Add(dbPassport);
+            if (needsRemove) needToDelete.Add(dbPassport);
         }
         var needToAdd = new List<PassportModel>(); //только те, которое есть в сурс файле, но пока нет в базе
         foreach (var sourcePassport in sourcePassports)
         {
-            bool needsAdd = false;
-            foreach(var dbPassport in dbPassports)
+            bool needsAdd = true;
+            foreach (var dbPassport in dbPassports)
             {
-                if(sourcePassport.Equals(dbPassport))
+                if (sourcePassport.Equals(dbPassport))
                 {
-                    needsAdd = true;
+                    needsAdd = false;
                     break;
                 }
             }
-            if(needsAdd) needToAdd.Add(sourcePassport);
+            if (needsAdd) needToAdd.Add(sourcePassport);
         }
 
-        int date = (DateTime.Now.Year - 2000-1) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day;
+        int date = (DateTime.Now.Year - 2000 - 1) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day;
 
         List<ChangeModel> changes = new List<ChangeModel>();
 
@@ -81,7 +81,7 @@ public class ReaderService : IReaderService
                 Date = date
             });
         }
-        
+
         while (needToDelete.Count > 0)
         {
             int number = 0;
@@ -102,7 +102,7 @@ public class ReaderService : IReaderService
             var x = changes.GetRange(0, number);
             await _dbContext.Changes.AddRangeAsync(x);
             await _dbContext.SaveChangesAsync();
-            changes.RemoveRange(0, number);  
+            changes.RemoveRange(0, number);
         }
         while (needToAdd.Count > 0)
         {
@@ -118,7 +118,7 @@ public class ReaderService : IReaderService
     }
 
     private List<PassportModel> GetPassports()
-    { 
+    {
         List<PassportModel> passports = new List<PassportModel>();
         using (TextFieldParser tfp = new TextFieldParser(@"C:\\PassportChecker\Data.csv"))
         {

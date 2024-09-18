@@ -63,5 +63,6 @@ namespace PassportChecker.Migrations
             migrationBuilder.DropTable(
                 name: "Passports");
         }
+    
     }
 }

@@ -55,7 +55,7 @@ public class ReaderService : IReaderService
             if (needsAdd) needToAdd.Add(sourcePassport);
         }
 
-        int date = (DateTime.Now.Year - 2000 - 1) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day;
+        int date = (DateTime.Now.Year - 2000 - 1) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day-1;
 
         List<ChangeModel> changes = new List<ChangeModel>();
 
@@ -85,7 +85,7 @@ public class ReaderService : IReaderService
         while (needToDelete.Count > 0)
         {
             int number = 0;
-            if (needToDelete.Count >= 25000) number = 25000;
+            if (needToDelete.Count >= 100000) number = 100000;
             else number = needToDelete.Count;
 
             var x = needToDelete.GetRange(0, number);
@@ -96,7 +96,7 @@ public class ReaderService : IReaderService
         while (changes.Count > 0)
         {
             int number = 0;
-            if (changes.Count >= 25000) number = 25000;
+            if (changes.Count >= 100000) number = 100000;
             else number = changes.Count;
 
             var x = changes.GetRange(0, number);
@@ -107,7 +107,7 @@ public class ReaderService : IReaderService
         while (needToAdd.Count > 0)
         {
             int number = 0;
-            if (needToAdd.Count >= 25000) number = 25000;
+            if (needToAdd.Count >= 100000) number = 100000;
             else number = needToAdd.Count;
 
             var x = needToAdd.GetRange(0, number);

@@ -2,7 +2,7 @@
 
 namespace PassportChecker.Services.Interfaces;
 
-public interface IReaderService
+public interface IDataUpdaterService
 {
     public Task GetDataFromSource();
 }

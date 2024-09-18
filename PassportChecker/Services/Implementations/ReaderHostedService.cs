@@ -6,14 +6,14 @@ using PassportChecker.Services.Interfaces;
 namespace PassportChecker.Services.Implementations;
 public class ReaderHostedService : BackgroundService
 {
-    private readonly ReaderService _readerService;
+    private readonly DataUpdaterService _readerService;
     private int Hour { get; set; }
     private int Minute { get; set; }
     public ReaderHostedService(IConfiguration configuration, ApiDbContext dbContext, IMapper mapper)
     {
         Hour = Int32.Parse(configuration["ReaderTime:Hour"]);
         Minute = Int32.Parse(configuration["ReaderTime:Minute"]);
-        _readerService = new ReaderService(dbContext, mapper);
+        _readerService = new DataUpdaterService(dbContext, mapper);
     }
 
     public override Task StartAsync(CancellationToken cancellationToken)

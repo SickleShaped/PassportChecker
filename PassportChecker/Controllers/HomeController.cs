@@ -15,9 +15,9 @@ public class HomeController : Controller
 {
     private readonly IPassportService _passportService;
 
-    public IReaderService _readerService; ///..............................................................
+    public IDataUpdaterService _readerService; ///..............................................................
 
-    public HomeController(IPassportService passportService, IReaderService readerService)
+    public HomeController(IPassportService passportService, IDataUpdaterService readerService)
     {
         _readerService = readerService;
         _passportService = passportService;

@@ -8,7 +8,7 @@ public static class DependencyInjectionBuilderService
     public static IServiceCollection AddDependencyInjection(this IServiceCollection services, Microsoft.Extensions.Configuration.ConfigurationManager builder)
     {
         services.AddTransient<IPassportService, PassportPostgreSQLService>();
-        services.AddTransient<IReaderService, ReaderService>();
+        services.AddTransient<IDataUpdaterService, DataUpdaterService>();
 
         return services;
     }

@@ -10,6 +10,6 @@ public class ConfigurePassport:IEntityTypeConfiguration<PassportModel>
     {
         builder.ToTable("Passports");
         builder.HasKey(c => new { c.Series, c.Number });
-        //builder.HasIndex(c => new { c.Series, c.Number });
+        builder.HasIndex(c => new { c.Series, c.Number });
     }
 }

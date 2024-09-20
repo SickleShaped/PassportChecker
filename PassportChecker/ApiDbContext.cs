@@ -10,7 +10,7 @@ public class ApiDbContext:DbContext
 
     public ApiDbContext() => Database.EnsureCreated();
 
-    public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
+    public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { Database.SetCommandTimeout(150000); }
 
     public DbSet<PassportModel> Passports { get; set; } = null!;
 

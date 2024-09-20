@@ -16,7 +16,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         string? connection;
-        if(builder.Environment.IsDevelopment())
+        if (builder.Environment.IsDevelopment())
         {
             connection = builder.Configuration.GetConnectionString("Test");
         }
@@ -24,19 +24,19 @@ public class Program
         {
             connection = builder.Configuration.GetConnectionString("Default");
         }
-        
-        
+
+
         builder.Services.AddSwaggerGen(config =>
         {
             config.SwaggerDoc("v1", new OpenApiInfo { Title = "PassportChecker", Version = "v1" });
         });
 
-        builder.Services.AddDbContext<ApiDbContext>(options=>options.UseNpgsql(connection));
+        builder.Services.AddDbContext<ApiDbContext>(options => options.UseNpgsql(connection));
         builder.Services.AddAutoMapper(typeof(AppMapingProfile));
         builder.Services.AddDependencyInjection(builder.Configuration);
         builder.Services.AddControllersWithViews();
-       
-        //builder.Services.AddHostedService<ReaderHostedService>();
+
+        builder.Services.AddHostedService<ReaderHostedService>();
 
         var app = builder.Build();
 
@@ -47,7 +47,7 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c=>c.SwaggerEndpoint("/swagger/v1/swagger.json", "Passports V1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Passports V1"));
         }
 
         app.UseDBInitialize();
@@ -64,6 +64,6 @@ public class Program
 
         app.Run();
 
-       
+
     }
 }

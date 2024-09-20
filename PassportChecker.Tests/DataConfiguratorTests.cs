@@ -1,21 +1,22 @@
 ﻿using Moq;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PassportChecker.Services.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using AutoMapper;
 using PassportChecker.Models.DbModels;
+using NUnit.Framework.Legacy;
+using Microsoft.AspNetCore.Routing;
 
 namespace PassportChecker.Tests;
 
+[TestFixture]
 public class DataConfiguratorTests
 {
-    
-    [Fact]
+    [Test]
+    public void Test()
+    {
+        ClassicAssert.IsTrue(true);
+    }
+
+    [Test]
     public void GetFirstExceptSecond_Correct_HasErrorFalse()
     {
         //Arrange
@@ -42,16 +43,16 @@ public class DataConfiguratorTests
 
         //Act
         var result = DataConfigurator.GetFirstExceptSecond(first, second);
-        
+
         bool NotFound = false;
-        foreach ( var model1 in result )
+        foreach (var model1 in result)
         {
             NotFound = true;
-            foreach ( var model2 in CorrectPassports )
+            foreach (var model2 in CorrectPassports)
             {
                 if (model1.Equals(model2))
-                { 
-                    NotFound=false;
+                {
+                    NotFound = false;
                     break;
                 }
             }
@@ -59,11 +60,11 @@ public class DataConfiguratorTests
         }
 
         //Assert
-        Assert.False(NotFound);
+        ClassicAssert.IsFalse(NotFound);
 
     }
 
-    [Fact]
+    [Test]
     public void GetChanges_Scenario_Result()
     {
         //Arrange
@@ -91,14 +92,14 @@ public class DataConfiguratorTests
         bool Incorrect = false;
         for (int i = 0; i < result.Count; i++)
         {
-            if(result[i].Series == CorrectChanges[i].Series && result[i].Number == CorrectChanges[i].Number)
+            if (result[i].Series == CorrectChanges[i].Series && result[i].Number == CorrectChanges[i].Number)
             {
-                if( (i<2 && result[i].IsActive == false)||(i>1 && result[i].IsActive == true) ) Incorrect = true;     
+                if ((i < 2 && result[i].IsActive == false) || (i > 1 && result[i].IsActive == true)) Incorrect = true;
             }
         }
 
         //Assert
-        Assert.False(Incorrect);
+        ClassicAssert.IsFalse(Incorrect);
     }
 
 }

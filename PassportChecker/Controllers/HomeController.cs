@@ -14,9 +14,7 @@ namespace PassportChecker.Controllers;
 public class HomeController : Controller
 {
     private readonly IPassportService _passportService;
-
-    public IDataUpdaterService _readerService; ///..............................................................
-
+    private readonly IDataUpdaterService _readerService;
     public HomeController(IPassportService passportService, IDataUpdaterService readerService)
     {
         _readerService = readerService;
@@ -36,18 +34,18 @@ public class HomeController : Controller
     }
 
     [HttpGet("GetChangesByDate")]
-    public async Task<List<Change>> GetChangesByDate(int date)
+    public async Task<List<Change>> GetChangesByDate(int date, int page = 0)
     {
-        return await _passportService.GetChangesByDate(date);
+        return await _passportService.GetChangesByDate(date, page);
     }
 
     [HttpGet("GetChangeByPassport")]
-    public async Task<List<Change>> GetChangeByPassport(int series, int number)
+    public async Task<List<Change>> GetChangeByPassport(int series, int number, int page = 0)
     {
-        return await _passportService.GetChangeByPassport(series, number);
+        return await _passportService.GetChangeByPassport(series, number, page);
     }
 
-    [HttpPost("FAKEREADER")]
+    [HttpPost("AutoReader")]
     public async Task GetDataFromSource()
     {
         await _readerService.GetDataFromSource();

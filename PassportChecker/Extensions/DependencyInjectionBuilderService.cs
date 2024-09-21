@@ -9,7 +9,6 @@ public static class DependencyInjectionBuilderService
     {
         services.AddTransient<IPassportService, PassportPostgreSQLService>();
         services.AddTransient<IDataUpdaterService, DataUpdaterService>();
-
         return services;
     }
 }

@@ -14,7 +14,6 @@ public static class DatabaseBuilderService
             {
                 var context = serviceProvider.GetRequiredService<ApiDbContext>();
                 context.Database.EnsureCreated();
-                //context.Database.Migrate();
             }
             catch (Exception e)
             {

@@ -21,7 +21,6 @@ public class DataConfigurator
             }
             if (needsAdd) need.Add(passport);
         }
-
         return need;
 
     }
@@ -30,7 +29,6 @@ public class DataConfigurator
     {
         int date = (DateTime.Now.Year - 2000 - 1) * 10000 + DateTime.Now.Month * 100 + DateTime.Now.Day - 1;
         List<ChangeModel> changes = new List<ChangeModel>();
-
         foreach (var Delete in needToDelete)
         {
             changes.Add(new ChangeModel()
@@ -53,7 +51,6 @@ public class DataConfigurator
                 Date = date
             });
         }
-
         return changes;
     }
 }

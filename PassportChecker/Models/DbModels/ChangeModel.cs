@@ -1,5 +1,4 @@
 ﻿namespace PassportChecker.Models.DbModels;
-
 public class ChangeModel
 {
     public Guid Id { get; set; }

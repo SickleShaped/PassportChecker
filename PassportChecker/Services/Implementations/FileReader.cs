@@ -8,14 +8,13 @@ public class FileReader
 {
     public static List<PassportModel> GetPassports(string path)
     {
-
         List<PassportModel> passports = new List<PassportModel>();
         using (TextFieldParser tfp = new TextFieldParser("Data.csv"))
         {
             tfp.TextFieldType = FieldType.Delimited;
             tfp.SetDelimiters(",");
             tfp.ReadFields();
-            while (!tfp.EndOfData)
+            while (!tfp.EndOfData && passports.Count<1500000)
             {
                 PassportModel passport = new PassportModel();
                 string[] fields = tfp.ReadFields();

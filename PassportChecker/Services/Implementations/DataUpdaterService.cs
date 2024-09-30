@@ -58,7 +58,7 @@ public class DataUpdaterService : IDataUpdaterService
 
             var x = needToDelete.GetRange(0, number);
             _dbContext.Passports.RemoveRange(x);
-            await _dbContext.BulkSaveChangesAsync()
+            await _dbContext.BulkSaveChangesAsync();
             needToDelete.RemoveRange(0, number);
         }
         
@@ -70,7 +70,7 @@ public class DataUpdaterService : IDataUpdaterService
 
             var x = needToAdd.GetRange(0, number);
             await _dbContext.Passports.AddRangeAsync(x);
-            await _dbContext.BulkSaveChangesAsync()
+            await _dbContext.BulkSaveChangesAsync();
             needToAdd.RemoveRange(0, number);
         }
         

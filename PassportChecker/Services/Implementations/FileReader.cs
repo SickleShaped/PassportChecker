@@ -14,7 +14,7 @@ public class FileReader
             tfp.TextFieldType = FieldType.Delimited;
             tfp.SetDelimiters(",");
             tfp.ReadFields();
-            while (!tfp.EndOfData && passports.Count<1500000)
+            while (!tfp.EndOfData && passports.Count<10000002)
             {
                 PassportModel passport = new PassportModel();
                 string[] fields = tfp.ReadFields();

@@ -15,15 +15,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        string? connection;
-        if (builder.Environment.IsDevelopment())
-        {
-            connection = builder.Configuration.GetConnectionString("Test");
-        }
-        else
-        {
-            connection = builder.Configuration.GetConnectionString("Default");
-        }
+            var connection = builder.Configuration.GetConnectionString("Default");
+        
 
 
         builder.Services.AddSwaggerGen(config =>

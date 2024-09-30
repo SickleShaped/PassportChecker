@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.FileIO;
 using PassportChecker.Models;
@@ -31,6 +32,23 @@ public class DataUpdaterService : IDataUpdaterService
         var needToDelete = DataConfigurator.GetFirstExceptSecond(dbPassports, sourcePassports);
         var needToAdd = DataConfigurator.GetFirstExceptSecond(sourcePassports, dbPassports);
         var changes = DataConfigurator.GetChanges(needToDelete, needToAdd);
+
+        
+
+        while (changes.Count > 0)
+        {
+            int number = 0;
+            if (changes.Count >= 1000000) number = 1000000;
+            else number = changes.Count;
+
+            var x = changes.GetRange(0, number);
+             _dbContext.Changes.AddRange(x);
+            await _dbContext.BulkSaveChangesAsync();
+            changes.RemoveRange(0, number);
+        }
+
+        int i = 0;
+
         
         while (needToDelete.Count > 0)
         {
@@ -40,20 +58,10 @@ public class DataUpdaterService : IDataUpdaterService
 
             var x = needToDelete.GetRange(0, number);
             _dbContext.Passports.RemoveRange(x);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.BulkSaveChangesAsync()
             needToDelete.RemoveRange(0, number);
         }
-        while (changes.Count > 0)
-        {
-            int number = 0;
-            if (changes.Count >= 100000) number = 100000;
-            else number = changes.Count;
-
-            var x = changes.GetRange(0, number);
-            await _dbContext.Changes.AddRangeAsync(x);
-            await _dbContext.SaveChangesAsync();
-            changes.RemoveRange(0, number);
-        }
+        
         while (needToAdd.Count > 0)
         {
             int number = 0;
@@ -62,9 +70,10 @@ public class DataUpdaterService : IDataUpdaterService
 
             var x = needToAdd.GetRange(0, number);
             await _dbContext.Passports.AddRangeAsync(x);
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.BulkSaveChangesAsync()
             needToAdd.RemoveRange(0, number);
         }
+        
     }
 
     
